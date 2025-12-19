@@ -1,20 +1,60 @@
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
 #include <iostream>
 
+#include "Account.h"
+#include <filesystem>
+
+using namespace std;
+using namespace std::chrono;
 // TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the
-    // <b>lang</b> variable name to see how CLion can help you rename it.
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
 
-    for (int i = 1; i <= 5; i++) {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code.
-        // We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/>
-        // breakpoint for you, but you can always add more by pressing
-        // <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
+    Account myAccount("Joan");
+
+    year_month_day d1{year{2025}, month{1}, day{10}};
+    year_month_day d2{year{2025}, month{1}, day{12}};
+    year_month_day d3{year{2025}, month{1}, day{15}};
+
+    Transaction stipendio(TransactionType::Income, 1500.0,d1,"Stipendio di gennaio" , "Lavoro");
+    Transaction spesaSuper(TransactionType::Expense,80.0,d2,"Spesa al supermercato","Spesa");
+    Transaction affitto(TransactionType::Expense,500.0,d3,"Affitto gennaio","Casa");
+
+    myAccount.addTransaction(spesaSuper);
+    myAccount.addTransaction(affitto);
+    myAccount.addTransaction(stipendio);
+
+    cout << "Conto di: " << myAccount.getOwnerName() << "\n";
+    cout << "\nSaldo attuale: " << myAccount.getBalance() << endl;
+
+    const auto& transactions = myAccount.getTransactions();
+    cout << "Numero di transazioni: " << transactions.size() << "\n";
+
+    cout << "Dettaglio transazioni:\n";
+    for (const auto& t : transactions) {
+        t.toString(true);
     }
+    //per mettere il colore ho abilitato la voce "Emulate terminal in output console"
+    cout << "=== SALVATAGGIO SU FILE ===\n";
+    myAccount.saveToFile("conto.txt");
+    cout << "File 'conto.txt' salvato correttamente.\n\n";
+
+    cout << "=== CARICAMENTO DA FILE ===\n";
+    Account loaded("Vuoto");
+    loaded.loadFromFile("conto.txt");
+
+    cout << "Proprietario caricato: "
+         << loaded.getOwnerName() << "\n";
+
+    cout << "Transazioni caricate:\n";
+    for (const auto& t : loaded.getTransactions()) {
+        t.toString(false); // stampa normale, senza colori
+    }
+
+    cout << "\nSaldo dopo il caricamento: "
+         << loaded.getBalance() << "\n";
 
     return 0;
 }

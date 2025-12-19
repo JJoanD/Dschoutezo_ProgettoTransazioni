@@ -3,10 +3,19 @@ project(Dschoutezo_ProgettoTransazioni)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Dschoutezo_ProgettoTransazioni main.cpp
+add_library(coreProject
         Account.cpp
         Account.h
         Transaction.cpp
         Transaction.h
-        test/AccountTest.cpp
-        test/TransactionTest.cpp)
+)
+
+target_include_directories(coreProject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+add_executable(Dschoutezo_ProgettoTransazioni main.cpp )
+
+target_link_libraries(Dschoutezo_ProgettoTransazioni PRIVATE coreProject)
+
+enable_testing()
+add_subdirectory(test)
