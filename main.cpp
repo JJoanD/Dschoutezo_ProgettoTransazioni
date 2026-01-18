@@ -36,7 +36,7 @@ int main() {
 
     cout << "Dettaglio transazioni:\n";
     for (const auto& t : transactions) {
-        t.toString(true);
+        t.toString();
     }
     //per mettere il colore ho abilitato la voce "Emulate terminal in output console"
     cout << "=== SALVATAGGIO SU FILE ===\n";
@@ -52,12 +52,15 @@ int main() {
 
     cout << "Transazioni caricate:\n";
     for (const auto& t : loaded.getTransactions()) {
-        t.toString(false); // stampa normale, senza colori
+        t.toString(); // stampa normale, senza colori
     }
 
     cout << "\nSaldo dopo il caricamento: "
          << loaded.getBalance() << "\n";
-
+/*
+    cout << "=== RICERCA PER DATA ===\n";
+    loaded.searchByDate(d1);
+*/
     return 0;
 }
 

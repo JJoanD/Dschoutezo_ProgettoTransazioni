@@ -1,7 +1,9 @@
 //
 // Created by hp on 11/12/2025.
 //
-
+#ifdef _WIN32
+#include <windows.h>
+#endif
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
@@ -42,24 +44,17 @@ void Transaction::setDescription(const std::string& desc) { description = desc; 
 void Transaction::setCategory(const std::string& cat) { category = cat; }
 
 //altro
-void Transaction::toString(bool colored) const
+void Transaction::toString() const
 {
-    const char* color = "";
-    const char* reset = "";
-
-    if (colored) {
-        color = (type == TransactionType::Income ? GREEN : RED);
-        reset = RESET;
-    }
 
     std::cout
       << "- "
       << (type == TransactionType::Income ? "[ENTRATA] " : "[USCITA] ")
       << description
-      << " | " << color << " Importo: " << (type == TransactionType::Income? "+" : "-" )<< amount << reset
+      << " | Importo: " << (type == TransactionType::Income? "+" : "-" )<< amount
       << " | Data: " << this->getDate().toISO() 
-      << " | Categoria: " << category << "\n"
-      ;
+      << " | Categoria: " << category
+      << "\n";
 }
 
 std::string Transaction::serialize() const {
@@ -116,5 +111,7 @@ Transaction Transaction::deserialize(const std::string& line) {
 
     return Transaction(tType, amount, date, description, category);
 }
+
+
 
 

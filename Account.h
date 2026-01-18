@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "Transaction.h"
+#include "Date.h"
 
 class Account {
 
@@ -34,6 +35,8 @@ public:
 
     void saveToFile(const std::string& filename)const;
     void loadFromFile(const std::string& filename);
+
+    void searchByDate(const Date& date);
 
 private:
     std::string ownerName;                 // Nome del titolare del conto

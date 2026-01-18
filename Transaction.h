@@ -46,13 +46,12 @@ public:
 
     void setCategory(const std::string &category);
 
-    void toString(bool colored = false) const;
+    void toString() const;
 
-    // Converte la transazione in una riga di testo per il file
-    std::string serialize() const;
+    std::string serialize() const;     // Converte la transazione in una riga di testo per il file
 
-    // Crea una transazione a partire da una riga di testo del file
-    static Transaction deserialize(const std::string& line);
+    static Transaction deserialize(const std::string& line);     // Crea una transazione a partire da una riga di testo del file
+
 
 private:
     TransactionType type;

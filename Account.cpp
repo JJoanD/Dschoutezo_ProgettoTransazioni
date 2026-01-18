@@ -88,3 +88,12 @@ void Account::loadFromFile(const std::string& filename) {
         transactions.push_back(t);
     }
 }
+
+void Account::searchByDate(const Date &date) {
+    for (const auto& t : transactions) {
+        if (t.getDate() == date) {
+            t.toString();
+        }
+    }
+
+}
