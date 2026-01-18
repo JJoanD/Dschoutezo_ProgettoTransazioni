@@ -6,7 +6,7 @@
 #define TRANSACTION_H
 
 #include <string>
-#include <chrono>
+#include  "Date.h"
 
 enum class TransactionType {
     Income,
@@ -20,7 +20,7 @@ public:
 
     Transaction(TransactionType type,
                 double amount,
-                const std::chrono::year_month_day &date,
+                const Date& date,
                 const std::string &description,
                 const std::string &category = "");
 
@@ -29,7 +29,7 @@ public:
 
     double getAmount() const;
 
-    const std::chrono::year_month_day &getDate() const;
+    const Date &getDate() const;
 
     const std::string &getDescription() const;
 
@@ -40,9 +40,9 @@ public:
 
     void setAmount(double amount);
 
-    void setDate(const std::chrono::year_month_day &date);
-
     void setDescription(const std::string &description);
+
+    void setDate(const Date &date);
 
     void setCategory(const std::string &category);
 
@@ -57,7 +57,7 @@ public:
 private:
     TransactionType type;
     double amount;
-    std::chrono::year_month_day date;
+    Date date;
     std::string description;
     std::string category;
 };

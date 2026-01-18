@@ -5,6 +5,8 @@ add_subdirectory(lib/googletest)
 add_executable(runAllTest
         TransactionTest.cpp
         AccountTest.cpp
+        DateTest.cpp
+        AccountIOTest.cpp
 )
 
 target_include_directories(runAllTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/..)

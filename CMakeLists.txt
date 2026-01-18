@@ -8,6 +8,8 @@ add_library(coreProject
         Account.h
         Transaction.cpp
         Transaction.h
+        Date.cpp
+        Date.h
 )
 
 target_include_directories(coreProject PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

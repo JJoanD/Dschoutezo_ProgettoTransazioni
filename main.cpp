@@ -14,17 +14,19 @@ int main() {
 
     Account myAccount("Joan");
 
-    year_month_day d1{year{2025}, month{1}, day{10}};
-    year_month_day d2{year{2025}, month{1}, day{12}};
-    year_month_day d3{year{2025}, month{1}, day{15}};
+    Date d1(2025,1, 10);
+    Date d2(2025, 1, 12);
+    Date d3(2025, 1, 15);
 
-    Transaction stipendio(TransactionType::Income, 1500.0,d1,"Stipendio di gennaio" , "Lavoro");
-    Transaction spesaSuper(TransactionType::Expense,80.0,d2,"Spesa al supermercato","Spesa");
-    Transaction affitto(TransactionType::Expense,500.0,d3,"Affitto gennaio","Casa");
+    Transaction t1(TransactionType::Income, 1500.0,d1,"Stipendio di gennaio" , "Lavoro");
+    Transaction t2(TransactionType::Income, 40.0,d1,"Babysitting" , "Lavoro");
+    Transaction t3(TransactionType::Expense,80.0,d2,"Spesa al supermercato","Spesa");
+    Transaction t4(TransactionType::Expense,500.0,d3,"Affitto gennaio","Casa");
 
-    myAccount.addTransaction(spesaSuper);
-    myAccount.addTransaction(affitto);
-    myAccount.addTransaction(stipendio);
+    myAccount.addTransaction(t3);
+    myAccount.addTransaction(t4);
+    myAccount.addTransaction(t1);
+    myAccount.addTransaction(t2);
 
     cout << "Conto di: " << myAccount.getOwnerName() << "\n";
     cout << "\nSaldo attuale: " << myAccount.getBalance() << endl;

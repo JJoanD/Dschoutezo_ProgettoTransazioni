@@ -4,49 +4,39 @@
 
 #include <gtest/gtest.h>
 #include "Transaction.h"
-#include <chrono>
-
 
 // Utility per confrontare due year_month_day
-static void expectSameDate(const std::chrono::year_month_day& a,
-                           const std::chrono::year_month_day& b) {
-    EXPECT_EQ(int(a.year()), int(b.year()));
-    EXPECT_EQ(unsigned(a.month()), unsigned(b.month()));
-    EXPECT_EQ(unsigned(a.day()), unsigned(b.day()));
-}
 
 TEST(TransactionTest, ConstructorAndGetters_WorkCorrectly) {
-    using namespace std::chrono;
 
     // Arrange
     Transaction t(TransactionType::Income, 100.0,
-                  year{2025}/month{1}/day{10},
+                   Date(2026,1,15),
                   "Stipendio", "Lavoro");
 
     // Act + Assert
     EXPECT_EQ(t.getType(), TransactionType::Income);
     EXPECT_DOUBLE_EQ(t.getAmount(), 100.0);
-    expectSameDate(t.getDate(), year{2025}/month{1}/day{10});
+    EXPECT_EQ(t.getDate(), Date(2026,1,15));
     EXPECT_EQ(t.getDescription(), "Stipendio");
     EXPECT_EQ(t.getCategory(), "Lavoro");
 }
 
 TEST(TransactionTest, SerializeDeserialize_RoundTripPreservesData) {
-    using namespace std::chrono;
 
     // Arrange
     Transaction original(TransactionType::Expense, 80.5,
-                         year{2025}/month{1}/day{12},
+                          Date(2026,1,12),
                          "Spesa al supermercato", "Spesa");
 
     // Act
     std::string row = original.serialize();
-    Transaction parsed = Transaction::deserialize(row);
+    Transaction obtained = Transaction::deserialize(row);
 
     // Assert
-    EXPECT_EQ(parsed.getType(), original.getType());
-    EXPECT_DOUBLE_EQ(parsed.getAmount(), original.getAmount());
-    expectSameDate(parsed.getDate(), original.getDate());
-    EXPECT_EQ(parsed.getDescription(), original.getDescription());
-    EXPECT_EQ(parsed.getCategory(), original.getCategory());
+    ASSERT_EQ(obtained.getType(), original.getType()); //faccio assert perchè se sono due tipi diversi non ha senso continuare
+    EXPECT_DOUBLE_EQ(obtained.getAmount(), original.getAmount());
+    EXPECT_EQ(obtained.getDate(), original.getDate());
+    EXPECT_EQ(obtained.getDescription(), original.getDescription());
+    EXPECT_EQ(obtained.getCategory(), original.getCategory());
 }
