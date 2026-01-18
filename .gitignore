@@ -1,0 +1,8 @@
+....
+.
+
+/build/
+/googletest/
+/cmake-build-*/
+.idea/
+test/lib
